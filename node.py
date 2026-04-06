@@ -26,8 +26,9 @@ class FluxReferenceConditioningNode(io.ComfyNode):
 
     @classmethod
     def execute(cls, conditioning, vae, images: io.Autogrow.Type) -> io.NodeOutput:
-        latent_list = [vae.encode(v) for v in images.values() if v is not None]
-        conditioning = node_helpers.conditioning_set_values(conditioning, {"reference_latents": latent_list}, append=True)
+        if 0 < len(images.values()):
+            latent_list = [vae.encode(v) for v in images.values() if v is not None]
+            conditioning = node_helpers.conditioning_set_values(conditioning, {"reference_latents": latent_list}, append=True)
         return io.NodeOutput(conditioning)
 
 class FluxKleinReferenceConditioningNode(io.ComfyNode):
@@ -57,7 +58,8 @@ class FluxKleinReferenceConditioningNode(io.ComfyNode):
 
     @classmethod
     def execute(cls, positive, negative, vae, images: io.Autogrow.Type) -> io.NodeOutput:
-        latent_list = [vae.encode(v) for v in images.values() if v is not None]
-        positive = node_helpers.conditioning_set_values(positive, {"reference_latents": latent_list}, append=True)
-        negative = node_helpers.conditioning_set_values(negative, {"reference_latents": latent_list}, append=True)
+        if 0 < len(images.values()):
+            latent_list = [vae.encode(v) for v in images.values() if v is not None]
+            positive = node_helpers.conditioning_set_values(positive, {"reference_latents": latent_list}, append=True)
+            negative = node_helpers.conditioning_set_values(negative, {"reference_latents": latent_list}, append=True)
         return io.NodeOutput(positive, negative)
