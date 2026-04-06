@@ -8,7 +8,7 @@ class FluxReferenceConditioningNode(io.ComfyNode):
         image_template = io.Autogrow.TemplateNames(
             io.Image.Input("image"),
             names=[f"image{n}" for n in range(1,11)],
-            min=1,
+            min=0,
         )
         return io.Schema(
             node_id="FluxReferenceConditioningNode",
@@ -38,7 +38,7 @@ class FluxKleinReferenceConditioningNode(io.ComfyNode):
         image_template = io.Autogrow.TemplateNames(
             io.Image.Input("image"),
             names=[f"image{n}" for n in range(1,11)],
-            min=1,
+            min=0,
         )
         return io.Schema(
             node_id="FluxKleinReferenceConditioningNode",
